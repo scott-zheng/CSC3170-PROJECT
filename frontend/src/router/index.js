@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import PersonalInfo from '../views/PersonalInfo.vue'
+import test from '../views/test.vue'
 
 Vue.use(VueRouter)
 
@@ -12,6 +13,11 @@ Vue.use(VueRouter)
     path: '/',
     name: 'Home',
     component: Home
+  },  
+  {
+    path: '/test',
+    name: 'test',
+    component: test
   },
   {
     path: '/login',

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="text-align: center;">
     <p class="logo"><router-link to='/'>Public Recommendation System for CUHKSZ</router-link></p>
     <a-button>Log out</a-button>
   </div>
