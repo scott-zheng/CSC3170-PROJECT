@@ -1,5 +1,5 @@
 <template>
-  <div style="text-align: center;">
+  <div style="text-align: center; position: 'fixed'; ">
     <p class="logo"><router-link to='/'>Public Recommendation System for CUHKSZ</router-link></p>
     <p class="logo"><a-icon id="user" type="user" @click="toUser()" /></p>
     <a-button id='logout' @click="logout()">Log out</a-button>
@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     toUser() {
-        this.$router.push({path:'/login'}).catch(err => {err})
+        this.$router.push({path:'/personalinfo'}).catch(err => {err})
     },
     logout() {
       // clear login information here
@@ -36,8 +36,6 @@ export default {
 }
 
 #logout {
-  top: 15px;
-  float: right;
   padding-right: 20px;
 }
 </style>

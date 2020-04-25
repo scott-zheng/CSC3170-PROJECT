@@ -1,10 +1,10 @@
 <template>
-  <div>
+    <div>
     <a-layout>
-      <a-layout-header class="layout-header">
+    <a-layout-header class="layout-header">
         <Header class="header"/>
-      </a-layout-header>
-    </a-layout>
+    </a-layout-header>
+    <a-layout-content class="layout-content">
 
     <!-- Main page -->
     <p id='mainpage'>Main Page</p>
@@ -74,7 +74,10 @@
             </a-form-model-item>
         </a-form-model>
     </div>
-  </div>
+    </a-layout-content>
+    </a-layout>
+    </div>
+  
 </template>
 
 
@@ -135,8 +138,23 @@ export default {
 
 
 <style>
+.header {
+  background: rgb(253, 253, 253);
+  padding: 0;
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  z-index:3;
+}
+.layout-header {
+  background: rgb(253, 253, 253);
+  width: 100%;
+  z-index:2;
+}
+
+
 #mainpage {
-    position: relative;
+
     margin-top: 0px;
     padding-top: 20px;
     float: left;
@@ -147,7 +165,7 @@ export default {
 }
 
 .text-content {
-    position: relative;
+
     margin-top: 100px;
     margin-bottom: 100px;
     padding-top: 20px;
