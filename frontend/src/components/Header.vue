@@ -1,7 +1,8 @@
 <template>
   <div>
     <p class="logo"><router-link to='/'>Public Recommendation System for CUHKSZ</router-link></p>
-    <a-button>Log out</a-button>
+    <p class="logo"><a-icon id="user" type="user" @click="toUser()" /></p>
+    <a-button id='logout' @click="logout()">Log out</a-button>
   </div>
 </template>
 
@@ -14,7 +15,14 @@ export default {
     };
   },
   methods: {
+    toUser() {
+        this.$router.push({path:'/login'}).catch(err => {err})
+    },
+    logout() {
+      // clear login information here
 
+      this.$router.push({path:'/login'}).catch(err => {err})
+    }
   },
 };
 </script>
@@ -25,7 +33,11 @@ export default {
   background: rgba(255, 255, 255, 0.2);
   float: left;
   padding-left: 20px;
-};
-</style>
+}
 
-vue
+#logout {
+  top: 15px;
+  float: right;
+  padding-right: 20px;
+}
+</style>
