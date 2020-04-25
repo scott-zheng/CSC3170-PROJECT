@@ -71,7 +71,7 @@ export default {
       } else if (value.length <= 8 || value.length >= 128) {
         callback(new Error('The length of password should be between 8 and 128'));
       } else if (this.registerForm.pass2 !== '') {
-        this.$refs.registerModel.validateField('Password2');
+        this.$refs.registerModel.validateField('pass2');
       }
       callback();
     };
