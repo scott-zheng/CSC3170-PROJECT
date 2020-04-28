@@ -5,6 +5,7 @@ import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import PersonalInfo from '../views/PersonalInfo.vue'
 import test from '../views/test.vue'
+import Search from '../views/Search.vue'
 
 Vue.use(VueRouter)
 
@@ -41,6 +42,11 @@ Vue.use(VueRouter)
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  },
+  {
+	path: '/search',
+	name: 'Search',
+	component: Search
   }
 ]
 
