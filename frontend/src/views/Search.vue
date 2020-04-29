@@ -13,15 +13,32 @@
 				</selectDiv>
 			</a-layout-header>
 			<a-layout-content>
-				<vendorDiv>
-					<vendorCard></vendorCard>
-				</vendorDiv>
-				<vendorDiv>
-					<vendorCard></vendorCard>
-				</vendorDiv>
-				<vendorDiv>
-					<vendorCard></vendorCard>
-				</vendorDiv>
+				<!-- 				<a-list
+				v-if="vendors.length"
+					:dataSource="vendors"
+					:header="`${vendors.length} ${vendors.length > 1 ? 'results' : 'result'}`"
+					:itemLayout="horizontal"
+				>
+					<a-list-item slot="renderItem" slot-scope="item">
+						<vendorCard
+						:name="item.name"
+						:service="item.service"
+						:address="item.address"
+						:openHour="item.openHour"
+						>
+						</vendorCard>
+					</a-list-item>
+				</a-list> -->
+				<h2> {{vendors.length}} {{vendors.length > 1 ? 'results' : 'result'}}</h2>
+				<ul class="ulVendor">
+					<!-- <vendorDiv> -->
+					<li class="liVendor" v-for="(item,index) in vendors" :key="index">
+						<vendorCard :name="item.name" :service="item.service" :address="item.address" :openHour="item.openHour">
+						</vendorCard>
+					</li>
+					<!-- </vendorDiv> -->
+				</ul>
+				<!-- <vendorCard v-bind:name = "category"></vendorCard> -->
 			</a-layout-content>
 			<a-layout-footer>Footer</a-layout-footer>
 		</a-layout>
@@ -32,8 +49,29 @@
 	import catSelect from '@/components/catSelect.vue'
 	import tagSelect from '@/components/tagSelect.vue'
 	import vendorCard from '@/components/vendorCard.vue'
-	
+
 	export default {
+
+		data() {
+			return {
+				vendors: [{
+						name: '711',
+						service: 'grocery',
+						address: '22nd shopping road',
+						openHour: '7 am ~ 11pm',
+					},
+					{
+						name: 'pandora',
+						service: 'restuarant',
+						address: '11nd shopping road',
+						openHour: '8 am ~ 7pm',
+					},
+				],
+				category: '',
+				tag: '',
+			};
+		},
+
 		name: 'Search',
 		components: {
 			catSelect,
@@ -72,12 +110,22 @@
 	#components-layout-demo-basic>.ant-layout:last-child {
 		margin: 0;
 	}
-	
+
 	selectDiv {
 		display: inline-block;
 	}
-	
-	vendorDiv {
+
+	.ulVendor {
+		display: inline;
+		white-space: nowrap;
+	}
+
+	.liVendor {
+		list-style: none;
 		display: inline-block;
+		margin: 3px;
+		margin-left: 5px;
+
+		float: left;
 	}
 </style>
