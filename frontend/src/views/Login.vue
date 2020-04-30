@@ -1,6 +1,9 @@
 <template>
   <a-row type="flex" justify="center">
     <a-col :span="10">
+      <div style="text-align: center; padding: 10%;">
+      <h1>Public Recommendation System for CUHKSZ</h1>
+      <h1><strong>Log in</strong></h1>
       <a-form-model ref="loginModel" :model="loginForm" :rules="rules">
         <a-form-model-item has-feedback label="UserPhone" prop="phone">
           <a-input v-model="loginForm.phone" autocomplete="off" />
@@ -20,6 +23,7 @@
           </a-button>
         </a-form-model-item>
       </a-form-model>
+      </div>
     </a-col>
   </a-row>
 </template>
@@ -45,7 +49,7 @@ export default {
       if (value === '') {
         callback(new Error('Please input the phone number'));
       } else {
-        if (this.ruleForm.phone !== '') {
+        if (this.loginForm.phone !== '') {
           // 在第2行中的ref绑定了一个DOM组件loginModel，并可以用$refs来调用使用了ref绑定的元素和组件。
           // https://www.jianshu.com/p/623c8b009a85
           this.$refs.loginModel.validateField('pass');
@@ -73,9 +77,10 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert('submit!');
+          this.$router.push({path:'/search'}).catch(err => {err})
+          this.$message.success('Login successful!');
         } else {
-          console.log('error submit!!');
+          this.$message.error('Login error');
           return false;
         }
       });

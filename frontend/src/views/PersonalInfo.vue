@@ -7,22 +7,41 @@
       <a-layout-content class="layout-content">
         <p style="font-size: 25px;">Personal information</p>
         <!-- List for information-->
+        <a-avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
         <a-descriptions title="User Info" bordered>
           <a-descriptions-item label="ID">{{infoForm.id}}</a-descriptions-item>
-          <a-descriptions-item label="name">{{infoForm.name}}</a-descriptions-item>
-          <a-descriptions-item label="phone">{{infoForm.phone}}</a-descriptions-item>
-          <a-descriptions-item label="email">{{infoForm.email}}</a-descriptions-item>
-          <a-descriptions-item label="birth" :span="2"> {{infoForm.birth}}</a-descriptions-item>
-          <a-descriptions-item label="gender">{{infoForm.gender}}</a-descriptions-item>
-          <a-descriptions-item label="age" :span='2'>{{infoForm.age}}</a-descriptions-item>
-          <a-descriptions-item label="school">{{infoForm.school}}</a-descriptions-item>
-          <a-descriptions-item label="schoolDirector">{{infoForm.schoollDirector}}</a-descriptions-item>
-          <a-descriptions-item label="schoolContact">{{infoForm.schoolContact}}</a-descriptions-item>
-          <a-descriptions-item label="college">{{infoForm.college}}</a-descriptions-item>
-          <a-descriptions-item label="collegeDirector">{{infoForm.collegeDirector}}</a-descriptions-item>
-          <a-descriptions-item label="collegeContact">{{infoForm.collegeContact}}</a-descriptions-item>
+          <a-descriptions-item label="Name">{{infoForm.name}}</a-descriptions-item>
+          <a-descriptions-item label="Phone">{{infoForm.phone}}</a-descriptions-item>
+          <a-descriptions-item label="Email">{{infoForm.email}}</a-descriptions-item>
+          <a-descriptions-item label="Birth" :span="2"> {{infoForm.birth}}</a-descriptions-item>
+          <a-descriptions-item label="Gender">{{infoForm.gender}}</a-descriptions-item>
+          <a-descriptions-item label="Age" :span='2'>{{infoForm.age}}</a-descriptions-item>
+          <a-descriptions-item label="School">{{infoForm.school}}</a-descriptions-item>
+          <a-descriptions-item label="SchoolDirector">{{infoForm.schoolDirector}}</a-descriptions-item>
+          <a-descriptions-item label="SchoolContact">{{infoForm.schoolContact}}</a-descriptions-item>
+          <a-descriptions-item label="College">{{infoForm.college}}</a-descriptions-item>
+          <a-descriptions-item label="CollegeDirector">{{infoForm.collegeDirector}}</a-descriptions-item>
+          <a-descriptions-item label="CollegeContact">{{infoForm.collegeContact}}</a-descriptions-item>
         </a-descriptions>
         <a-button @click="modifyFormVisible=true">Modify</a-button>
+        <p style="font-size: 20px; padding-top:55px">My comments</p>
+        <a-list
+          v-if="comments.length"
+          :dataSource="comments"
+          :header="`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`"
+          itemLayout="horizontal"
+        >
+          <a-list-item slot="renderItem" slot-scope="item">
+            <a-comment
+              :author="item.author"
+              :avatar="item.avatar"
+              :content="item.content"
+              :datetime="item.datetime"
+            >
+            </a-comment>
+            <a-rate v-model="item.rate" />
+          </a-list-item>
+        </a-list>
         <!-- Modify form for information-->
         <a-modal
           title="Modify form for information"
@@ -54,22 +73,24 @@
                   type="date"
                   placeholder="Pick a date"
                   style="width: 100%;"
+                  v-model="modifyInfoForm.birth"
+                  format="YYYY-MM-DD"
                 />
               </a-form-model-item>
               <a-form-model-item has-feedback label="Gender">
-                  <a-radio-group name="radioGroup" @change="onChange" :defaultValue="1">
-                    <a-radio :value="1">Male</a-radio>
-                    <a-radio :value="2">Female</a-radio>
+                  <a-radio-group name="radioGroup" @change="onChange" defaultValue="male">
+                    <a-radio value="male">Male</a-radio>
+                    <a-radio value="female">Female</a-radio>
                   </a-radio-group>
               </a-form-model-item>
               <a-form-model-item has-feedback label="School">
-                <a-select defaultValue="CUHK" style="width: 120px" @change="handleChange">
+                <a-select defaultValue="CUHK" style="width: 120px" @change="schoolChange">
                   <a-select-option value="CUHK">CUHK</a-select-option>
                   <a-select-option value="CUHKSZ">CUHKSZ</a-select-option>
                 </a-select>
               </a-form-model-item>
               <a-form-model-item has-feedback label="College">
-                <a-select defaultValue="Shaw" style="width: 120px" @change="handleChange">
+                <a-select defaultValue="Shaw" style="width: 120px" @change="collegeChange">
                   <a-select-option value="Shaw">Shaw</a-select-option>
                   <a-select-option value="Diligentia">Diligentia</a-select-option>
                   <a-select-option value="Muse">Muse</a-select-option>
@@ -98,7 +119,7 @@
 
 <script>
 import Header from '@/components/Header'
-
+import moment from 'moment';
 export default {
   name: 'PersonalInfo',
   data() {
@@ -159,6 +180,22 @@ export default {
       }
     };
     return {
+      comments: [
+        {
+          author: 'hrbattery',
+          avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+          content: "It's a good palce to go",
+          datetime: moment().fromNow(),
+          rate: 5
+        },
+                {
+          author: 'hrbattery',
+          avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+          content: "sry",
+          datetime: moment().fromNow(),
+          rate: 2
+        },
+      ],
       modifyFormVisible:false,
       rules: {
         name: [{ validator: validateName, trigger: 'blur' }],
@@ -168,9 +205,9 @@ export default {
         email: [{ validator: validateEmail, trigger: 'blur' }],
       },
       infoForm: {
-        id: '',
-        name: '',
-        phone: '',
+        id: '1',
+        name: 'hrbattery',
+        phone: '13530006000',
         email: '',
         birth: '',
         gender: '',
@@ -205,12 +242,18 @@ export default {
   methods: {
     onChange(e) {
       console.log(`checked = ${e.target.value}`);
+      this.modifyInfoForm.gender = e.target.value;
     },
     onChangeDate(date, dateString) {
       console.log(date, dateString);
     },
-    handleChange(value) {
+    schoolChange(value) {
       console.log(`selected ${value}`);
+      this.modifyInfoForm.school = value;
+    },
+    collegeChange(value) {
+      console.log(`selected ${value}`);
+      this.modifyInfoForm.college = value;
     },
     handleCancel() {
       this.modifyFormVisible = false;
@@ -220,6 +263,18 @@ export default {
         if (valid) {
           alert('submit!');
           this.$data.modifyFormVisible = false;
+          this.infoForm.birth = this.modifyInfoForm.birth.format("YYYY-MM-DD");
+          this.infoForm.name = this.modifyInfoForm.name;
+          this.infoForm.email = this.modifyInfoForm.email;
+          this.infoForm.phone = this.modifyInfoForm.phone;
+          this.infoForm.gender = this.modifyInfoForm.gender;
+          this.infoForm.school = this.modifyInfoForm.school;
+          this.infoForm.college = this.modifyInfoForm.college;
+          this.infoForm.age = this.modifyInfoForm.birth.fromNow().split(' ')[0];
+          this.infoForm.schoolDirector = 'Xu Yangsheng';
+          this.infoForm.collegeDirector = 'Gu Yang';
+          this.infoForm.schoolContact = '0755-84273000';
+          this.infoForm.collegeContact = '0755-84273912';
         } else {
           console.log('error submit!!');
           this.$data.modifyFormVisible = false;

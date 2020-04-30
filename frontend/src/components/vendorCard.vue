@@ -1,10 +1,17 @@
 <template>
   <div>
     <a-card v-bind:title = "name" style="width: 300px">
+      <!--img
+        alt="example"
+        src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+        slot="cover"
+      /-->
       <a href="#" slot="extra">Details</a>
-      <p>Service: {{service}}</p>
-      <p>Address: {{address}}</p>
-      <p>Open Hour:{{openHour}}</p>
+      <a-card-meta title="CIDE">
+        <p>Service: {{service}}</p>
+        <p>Address: {{address}}</p>
+        <p>Open Hour:{{openHour}}</p>
+      </a-card-meta>
     </a-card>
   </div>
 </template>

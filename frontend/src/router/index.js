@@ -8,6 +8,7 @@ import Main from '../views/Main.vue'
 import Vendor from '../views/Vendor.vue'
 import test from '../views/test.vue'
 import Search from '../views/Search.vue'
+import VendorInfo from '../views/VendorInfo.vue'
 
 
 Vue.use(VueRouter)
@@ -55,6 +56,11 @@ Vue.use(VueRouter)
 	path: '/search',
 	name: 'Search',
 	component: Search
+  },
+  {
+	path: '/vendorinfo',
+	name: 'VendorInfo',
+	component: VendorInfo
   }
 ]
 

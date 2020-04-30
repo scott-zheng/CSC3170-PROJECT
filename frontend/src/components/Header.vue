@@ -1,6 +1,6 @@
 <template>
   <div style="text-align: center; position: 'fixed'; ">
-    <p class="logo"><router-link to='/'>Public Recommendation System for CUHKSZ</router-link></p>
+    <p class="logo"><router-link to='/search'>Public Recommendation System for CUHKSZ</router-link></p>
     <p class="logo"><a-icon id="user" type="user" @click="toUser()" /></p>
     <a-button id='logout' @click="logout()">Log out</a-button>
   </div>

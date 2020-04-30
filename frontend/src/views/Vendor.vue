@@ -5,13 +5,23 @@
         <Header class="header"/>
       </a-layout-header>
       <a-layout-content class="layout-content">
-        <p style="font-size: 25px;">Vendor name</p>
-        <a-descriptions title="User Info">
-          <a-descriptions-item label="Service">Zhou Maomao</a-descriptions-item>
+        <p style="font-size: 25px;">CIDE</p>
+
+        <img
+          alt="example"
+          src="../assets/cide.jpg"
+          width="20%" height="20%"
+        />
+        <a-descriptions title="Vendor Info">
+          <a-descriptions-item label="Service">Startup Guidance</a-descriptions-item>
           <a-descriptions-item label="Address">
-            No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+            Letian Bldg. 3F No:1597 Letian Bldg.
           </a-descriptions-item>
+          <a-descriptions-item label="Tel">1380919333</a-descriptions-item>
         </a-descriptions>
+        <a-button @click="checkin" type="primary">
+          Check in
+        </a-button>
         <!-- Comment -->
         <a-list
           v-if="comments.length"
@@ -27,13 +37,14 @@
               :datetime="item.datetime"
             >
             </a-comment>
+            <a-rate v-model="item.rate" />
           </a-list-item>
         </a-list>
         <a-comment>
           <a-avatar
             slot="avatar"
             src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            alt="Han Solo"
+            alt="hrbattery"
           />
           <div slot="content">
             <a-form-item>
@@ -43,6 +54,7 @@
               <a-button htmlType="submit" :loading="submitting" @click="handleSubmit" type="primary">
                 Add Comment
               </a-button>
+              <a-rate v-model="rateValue" />
             </a-form-item>
           </div>
         </a-comment>
@@ -61,6 +73,7 @@ export default {
       comments: [],
       submitting: false,
       value: '',
+      rateValue: 2,
       moment,
     };
   },
@@ -76,10 +89,11 @@ export default {
         this.submitting = false;
         this.comments = [
           {
-            author: 'Han Solo',
+            author: 'hrbattery',
             avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
             content: this.value,
             datetime: moment().fromNow(),
+            rate: this.rateValue
           },
           ...this.comments,
         ];
@@ -89,6 +103,9 @@ export default {
     handleChange(e) {
       this.value = e.target.value;
     },
+    checkin() {
+      this.$message.success('Checkin Success!');
+    }
   },
   components: {
     Header

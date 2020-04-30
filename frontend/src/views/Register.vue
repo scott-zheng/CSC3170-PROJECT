@@ -1,6 +1,9 @@
 <template>
   <a-row type="flex" justify="center">
     <a-col :span="10">
+      <div style="text-align: center; padding: 10%;">
+      <h1>Public Recommendation System for CUHKSZ</h1>
+      <h1><strong>Register</strong></h1>
       <a-form-model ref="registerModel" :model="registerForm" :rules="rules">
         <a-form-model-item has-feedback label="UserPhone" prop="phone">
           <a-input v-model="registerForm.phone" autocomplete="off" />
@@ -22,10 +25,11 @@
           Reset
           </a-button>
           <a-button @click="toLogin()">
-          Login
+          Already have account? to Login
           </a-button>
         </a-form-model-item>
       </a-form-model>
+      </div>
     </a-col>
   </a-row>
 </template>
@@ -107,7 +111,8 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert('submit!');
+          this.$message.success('Successful register!')
+          this.$router.push({path:'/login'}).catch(err => {err})
         } else {
           console.log('error submit!!');
           return false;
