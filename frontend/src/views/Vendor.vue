@@ -6,7 +6,7 @@
       </a-layout-header>
       <a-layout-content class="layout-content">
         <p style="font-size: 25px;">CIDE</p>
-
+        <a style = "float:right;"><router-link to='/vendorinfo'>Edit</router-link></a>
         <img
           alt="example"
           src="../assets/cide.jpg"

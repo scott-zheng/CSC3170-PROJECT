@@ -78,19 +78,19 @@
                 />
               </a-form-model-item>
               <a-form-model-item has-feedback label="Gender">
-                  <a-radio-group name="radioGroup" @change="onChange" defaultValue="male">
+                  <a-radio-group name="radioGroup" v-model="modifyInfoForm.gender" defaultValue="male">
                     <a-radio value="male">Male</a-radio>
                     <a-radio value="female">Female</a-radio>
                   </a-radio-group>
               </a-form-model-item>
               <a-form-model-item has-feedback label="School">
-                <a-select defaultValue="CUHK" style="width: 120px" @change="schoolChange">
+                <a-select defaultValue="CUHK" style="width: 120px" v-model="modifyInfoForm.school">
                   <a-select-option value="CUHK">CUHK</a-select-option>
                   <a-select-option value="CUHKSZ">CUHKSZ</a-select-option>
                 </a-select>
               </a-form-model-item>
               <a-form-model-item has-feedback label="College">
-                <a-select defaultValue="Shaw" style="width: 120px" @change="collegeChange">
+                <a-select defaultValue="Shaw" style="width: 120px" v-model="modifyInfoForm.college">
                   <a-select-option value="Shaw">Shaw</a-select-option>
                   <a-select-option value="Diligentia">Diligentia</a-select-option>
                   <a-select-option value="Muse">Muse</a-select-option>
