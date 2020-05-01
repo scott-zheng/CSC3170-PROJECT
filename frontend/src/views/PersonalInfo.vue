@@ -15,7 +15,6 @@
           <a-descriptions-item label="Email">{{infoForm.email}}</a-descriptions-item>
           <a-descriptions-item label="Birth" :span="2"> {{infoForm.birth}}</a-descriptions-item>
           <a-descriptions-item label="Gender">{{infoForm.gender}}</a-descriptions-item>
-          <a-descriptions-item label="Age" :span='2'>{{infoForm.age}}</a-descriptions-item>
           <a-descriptions-item label="School">{{infoForm.school}}</a-descriptions-item>
           <a-descriptions-item label="SchoolDirector">{{infoForm.schoolDirector}}</a-descriptions-item>
           <a-descriptions-item label="SchoolContact">{{infoForm.schoolContact}}</a-descriptions-item>
@@ -84,17 +83,17 @@
                   </a-radio-group>
               </a-form-model-item>
               <a-form-model-item has-feedback label="School">
-                <a-select defaultValue="CUHK" style="width: 120px" v-model="modifyInfoForm.school">
-                  <a-select-option value="SSE">CUHK</a-select-option>
-                  <a-select-option value="SME">CUHK</a-select-option>
-                  <a-select-option value="HSS">CUHK</a-select-option>
-                  <a-select-option value="LHS">CUHKSZ</a-select-option>
+                <a-select defaultValue="SSE" style="width: 120px" v-model="modifyInfoForm.school">
+                  <a-select-option value="SSE">SSE</a-select-option>
+                  <a-select-option value="SME">SME</a-select-option>
+                  <a-select-option value="HSS">HSS</a-select-option>
+                  <a-select-option value="LHS">LHS</a-select-option>
                 </a-select>
               </a-form-model-item>
               <a-form-model-item has-feedback label="College">
                 <a-select defaultValue="Shaw" style="width: 120px" v-model="modifyInfoForm.college">
                   <a-select-option value="Shaw">Shaw</a-select-option>
-                  <a-select-option value="Diligentia">Diligentia</a-select-option>
+                  <a-select-option value="Dilligent">Diligentia</a-select-option>
                   <a-select-option value="Muse">Muse</a-select-option>
                   <a-select-option value="Harmonia">Harmonia</a-select-option>
                 </a-select>
@@ -208,13 +207,12 @@ export default {
         email: [{ validator: validateEmail, trigger: 'blur' }],
       },
       infoForm: {
-        id: '1',
+        id: '98212489',
         name: 'hrbattery',
         phone: '13530006000',
         email: '',
         birth: '',
         gender: '',
-        age: '',
         school: '',
         schoolDirector: '',
         schoolContact: '',
@@ -265,19 +263,45 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           alert('submit!');
-          this.$data.modifyFormVisible = false;
-          this.infoForm.birth = this.modifyInfoForm.birth.format("YYYY-MM-DD");
-          this.infoForm.name = this.modifyInfoForm.name;
-          this.infoForm.email = this.modifyInfoForm.email;
-          this.infoForm.phone = this.modifyInfoForm.phone;
-          this.infoForm.gender = this.modifyInfoForm.gender;
-          this.infoForm.school = this.modifyInfoForm.school;
-          this.infoForm.college = this.modifyInfoForm.college;
-          this.infoForm.age = this.modifyInfoForm.birth.fromNow().split(' ')[0];
-          this.infoForm.schoolDirector = 'Xu Yangsheng';
-          this.infoForm.collegeDirector = 'Gu Yang';
-          this.infoForm.schoolContact = '0755-84273000';
-          this.infoForm.collegeContact = '0755-84273912';
+          // this.$data.modifyFormVisible = false;
+          // this.infoForm.birth = this.modifyInfoForm.birth.format("YYYY-MM-DD");
+          // this.infoForm.name = this.modifyInfoForm.name;
+          // this.infoForm.email = this.modifyInfoForm.email;
+          // this.infoForm.phone = this.modifyInfoForm.phone;
+          // this.infoForm.gender = this.modifyInfoForm.gender;
+          // this.infoForm.school = this.modifyInfoForm.school;
+          // this.infoForm.college = this.modifyInfoForm.college;
+          // this.infoForm.age = this.modifyInfoForm.birth.fromNow().split(' ')[0];
+          // this.infoForm.schoolDirector = 'Xu Yangsheng';
+          // this.infoForm.collegeDirector = 'Gu Yang';
+          // this.infoForm.schoolContact = '0755-84273000';
+          // this.infoForm.collegeContact = '0755-84273912';
+          axios.post('/api/setPersonInfo',{
+            id: this.infoForm.id,
+            birth: this.modifyInfoForm.birth.format("YYYY-MM-DD"),
+            password: this.modifyInfoForm.pass,
+            name : this.modifyInfoForm.name,
+            email : this.modifyInfoForm.email,
+            phone : this.modifyInfoForm.phone,
+            gender : this.modifyInfoForm.gender,
+            school : this.modifyInfoForm.school,
+            college : this.modifyInfoForm.college,
+          }).then((response) => {
+            var res = response.data[0];
+            console.log(res);
+            this.$data.infoForm.id = res.User_id;
+            this.$data.infoForm.name = res.person_name;
+            this.$data.infoForm.phone = res.Phone_number;
+            this.$data.infoForm.email = res.Email;
+            this.$data.infoForm.birth = res.Birthday;
+            this.$data.infoForm.gender = res.Gender;
+            this.$data.infoForm.school = res.School_name;
+            this.$data.infoForm.schoolDirector = res.school_director;
+            this.$data.infoForm.schoolContact = res.school_contact;
+            this.$data.infoForm.college = res.College_name;
+            this.$data.infoForm.collegeDirector = res.college_director;
+            this.$data.infoForm.collegeContact = res.college_contact;
+          })
         } else {
           console.log('error submit!!');
           this.$data.modifyFormVisible = false;
@@ -290,10 +314,11 @@ export default {
     },
   },
   mounted: function() {
-    var user_id = 98212489
-    console.log(user_id)
+    var id = 98212489
+    // var id = sessionStorage.getItem('user_id')
+    console.log(id)
     axios.post('/api/getPersonInfo',{
-      user_id: 98212489,
+      user_id: id,
     }).then((response) => {
       var res = response.data[0];
       console.log(res);
@@ -303,7 +328,6 @@ export default {
       this.$data.infoForm.email = res.Email;
       this.$data.infoForm.birth = res.Birthday;
       this.$data.infoForm.gender = res.Gender;
-      this.$data.infoForm.age = res.Birthday;
       this.$data.infoForm.school = res.School_name;
       this.$data.infoForm.schoolDirector = res.school_director;
       this.$data.infoForm.schoolContact = res.school_contact;

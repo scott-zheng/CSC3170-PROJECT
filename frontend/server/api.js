@@ -54,8 +54,6 @@ router.post('/getPersonInfo', (req, res) => {
   var sql = $sql.user.getPersonInfo
   // var sql = 'insert into User(Person_Name, Phone_number, Person_Password) values (4, 22222222222, 121212121)';
   var params = req.body
-  console.log(params.user_id)
-  console.log(sql)
   conn.query(sql, [params.user_id], function (err, result) {
     if (err) {
       console.log(err)
@@ -63,6 +61,45 @@ router.post('/getPersonInfo', (req, res) => {
     if (result) {
       console.log(result)
       jsonWrite(res, result)
+    }
+  })
+})
+
+
+router.post('/setPersonInfo', (req, res) => {
+  var sql1 = $sql.user.setPersonInfo1
+  var sql2 = $sql.user.setPersonInfo2
+  // var sql = 'insert into User(Person_Name, Phone_number, Person_Password) values (4, 22222222222, 121212121)';
+  var params = req.body
+  console.log(params)
+  conn.query('select School_id, College_id from school join college where School_name = ? and College_name = ?', [params.school, params.college], function (err, result) {
+    var schoolid = result[0].School_id
+    var collegeid = result[0].College_id
+    console.log(result)
+    conn.query(sql2, [params.email, params.birth, schoolid, collegeid, params.gender, params.id], function (err, result) {
+      if (err) {
+        console.log(err)
+      }
+      if (result) {
+        console.log(result)
+      }
+    })
+  })
+  conn.query(sql1, [params.name, params.phone, params.password, params.id], function (err, result) {
+    if (err) {
+      console.log(err)
+    }
+    if (result) {
+      console.log(result)
+      conn.query($sql.user.getPersonInfo, [params.id], function (err, result) {
+        if (err) {
+          console.log(err)
+        }
+        if (result) {
+          console.log(result)
+          jsonWrite(res, result)
+        }
+      })
     }
   })
 })
