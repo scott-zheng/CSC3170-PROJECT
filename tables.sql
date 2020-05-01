@@ -140,4 +140,4 @@ ALTER TABLE `vendor`
 
 ALTER TABLE `vendor_category`
   ADD CONSTRAINT `cat_vendor_ibfk_1` FOREIGN KEY (`categoryID`) REFERENCES `category` (`categoryID`),
-  ADD CONSTRAINT `cat_vendor_ibfk_2` FOREIGN KEY (`vendorID`) REFERENCES `vendor` (`venueID`);
+  ADD CONSTRAINT `cat_vendor_ibfk_2` FOREIGN KEY (`vendorID`) REFERENCES `vendor` (`vendorID`);
