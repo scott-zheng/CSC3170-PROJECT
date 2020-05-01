@@ -8,15 +8,15 @@
                 <h1>Search Page</h1>
                 <block>
                 <selectDiv>
-					<catSelect/>
+					<catSelect :categories="category"></catSelect>
 				</selectDiv>
 				<selectDiv>
-					<tagSelect/>
+					<tagSelect :tags="tag"></tagSelect>
 				</selectDiv>
                 <a-button type="primary" @click="venforVisitable=true">Submit</a-button>
                 </block>
                 <block v-if="venforVisitable">
-				<h2> {{vendors.length}} {{vendors.length > 1 ? 'results' : 'result'}}</h2>
+				<h3> {{vendors.length}} {{vendors.length > 1 ? 'results' : 'result'}}</h3>
 				<ul class="ulVendor">
 					<!-- <vendorDiv> -->
 					<li class="liVendor" v-for="(item,index) in vendors" :key="index">
@@ -55,8 +55,8 @@
 						openHour: '8 am ~ 7pm',
 					},
 				],
-				category: '',
-				tag: '',
+				category: ["cafe", "canteen", "shop"],
+				tag: ["cosy", "comfortable", "dirty", "expensive"],
                 venforVisitable: false
             }
         },

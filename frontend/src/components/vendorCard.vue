@@ -7,11 +7,9 @@
         slot="cover"
       /-->
       <a href="#" slot="extra">Details</a>
-      <a-card-meta title="CIDE">
         <p>Service: {{service}}</p>
         <p>Address: {{address}}</p>
         <p>Open Hour:{{openHour}}</p>
-      </a-card-meta>
     </a-card>
   </div>
 </template>
