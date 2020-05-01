@@ -85,8 +85,10 @@
               </a-form-model-item>
               <a-form-model-item has-feedback label="School">
                 <a-select defaultValue="CUHK" style="width: 120px" v-model="modifyInfoForm.school">
-                  <a-select-option value="CUHK">CUHK</a-select-option>
-                  <a-select-option value="CUHKSZ">CUHKSZ</a-select-option>
+                  <a-select-option value="SSE">CUHK</a-select-option>
+                  <a-select-option value="SME">CUHK</a-select-option>
+                  <a-select-option value="HSS">CUHK</a-select-option>
+                  <a-select-option value="LHS">CUHKSZ</a-select-option>
                 </a-select>
               </a-form-model-item>
               <a-form-model-item has-feedback label="College">
@@ -120,6 +122,7 @@
 <script>
 import Header from '@/components/Header'
 import moment from 'moment';
+import axios from 'axios'
 export default {
   name: 'PersonalInfo',
   data() {
@@ -285,6 +288,29 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
+  },
+  mounted: function() {
+    var user_id = 98212489
+    console.log(user_id)
+    axios.post('/api/getPersonInfo',{
+      user_id: 98212489,
+    }).then((response) => {
+      var res = response.data[0];
+      console.log(res);
+      this.$data.infoForm.id = res.User_id;
+      this.$data.infoForm.name = res.person_name;
+      this.$data.infoForm.phone = res.Phone_number;
+      this.$data.infoForm.email = res.Email;
+      this.$data.infoForm.birth = res.Birthday;
+      this.$data.infoForm.gender = res.Gender;
+      this.$data.infoForm.age = res.Birthday;
+      this.$data.infoForm.school = res.School_name;
+      this.$data.infoForm.schoolDirector = res.school_director;
+      this.$data.infoForm.schoolContact = res.school_contact;
+      this.$data.infoForm.college = res.College_name;
+      this.$data.infoForm.collegeDirector = res.college_director;
+      this.$data.infoForm.collegeContact = res.college_contact;
+    })
   }
 }
 </script>
