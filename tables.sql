@@ -83,3 +83,61 @@ CREATE TABLE Follow(
     PRIMARY KEY (Following_id, Follower_id),
     FOREIGN KEY (Following_id, Folloer_id) REFERENCES Users(User_id)
 );
+
+		 
+-- Vendor Part --
+
+CREATE TABLE `category` (
+  `categoryID` int(11) NOT NULL,
+  `categoryName` varchar(40) NOT NULL,
+  `categoryDesc` varchar(150) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `vendor_category` (
+  `vendorID` int(11) NOT NULL,
+  `categoryID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `preference_vendor` (
+  `userID` int(11) NOT NULL,
+  `vendorID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `vendor` (
+  `vendorID` int(11) NOT NULL,
+  `name` varchar(40) NOT NULL,
+  `address` varchar(150) DEFAULT NULL,
+  `phoneNo` char(10) DEFAULT NULL,
+  `service` varchar(128) DEFAULT NULL,
+  `venueOpenTime` time DEFAULT NULL,
+  `venueCloseTime` time DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `vendor` (`vendorID`, `venueName`, `address`, `phoneNo`, `service`, `street_name`, `venueOpenTime`, `venueCloseTime`) VALUES
+(1, 'Pandora Plaza', 'Lower Campus - Student\'s Activity Bldg. 1F', '3122660302', `High Quality Food Supply`, '10:00:00', '23:00:00'),
+(2, 'LeTian #1 Cafeteria', 'Lower Campus - LeTian Bldg. 1F', '3122661240', 'Food Supply with Reasonable Price', '10:30:00', '21:00:00');
+
+
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`categoryID`);
+
+ALTER TABLE `vendor_category`
+  ADD PRIMARY KEY (`vendorID`,`categoryID`),
+  ADD KEY `categoryID` (`categoryID`);
+
+ALTER TABLE `preference_vendor`
+  ADD PRIMARY KEY (`userID`, `vendorID`),
+  ADD KEY `vendorID` (`vendorID`);
+
+ALTER TABLE `vendor`
+  ADD PRIMARY KEY (`vendorId`),
+
+ALTER TABLE `category`
+  MODIFY `categoryID` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `vendor`
+  MODIFY `vendorID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+ALTER TABLE `vendor_category`
+  ADD CONSTRAINT `cat_vendor_ibfk_1` FOREIGN KEY (`categoryID`) REFERENCES `category` (`categoryID`),
+  ADD CONSTRAINT `cat_vendor_ibfk_2` FOREIGN KEY (`vendorID`) REFERENCES `vendor` (`venueID`);
