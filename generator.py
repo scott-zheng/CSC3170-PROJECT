@@ -45,7 +45,7 @@ def generate_customer(n, used_id, customer_id, vendor_id, school_id, college_id)
             cus_gender = random.choice(gender)
             cus_email = str(id) + '@link.cuhk.edu.cn'
             customer.append((id, cus_email, birthday, cus_school, cus_college, cus_gender))
-        if i >= n:
+        if i >= 998:
             return customer
     return customer
 
@@ -57,6 +57,7 @@ def generate_vendor(n, used_id, customer_id, vendor_id):
             i += 1
             vendor_id.add(id)
             vendor.append((id, 'Pandora Plaza', 'Lower Campus - Student\'s Activity Bldg. 1F', '3122660302', 'High Quality Food Supply', '10:00:00', '23:00:00'))
+            break
     for id in used_id:
         if (id not in customer_id) and (id not in vendor_id):
             i += 1
@@ -111,7 +112,7 @@ def generate_category(category_id):
     category_name = ['Consult', 'Food Supply', 'Self-Study', 'Classroom', 'Tea Shop', 'Cafe', 'Supermarket']
     category_desc = ['Offering Consulting Services', 'Providing food supply', 'Place to study alone', 'Course Offering', 'Provide Tea', 'Offering Coffee', 'Grocery Shopping']
     categories = []
-    for i in range(tag_name):
+    for i in range(len(category_name)):
         category_id.add(i)
         categories.append((i, category_name[i], category_desc[i]))
     return categories
@@ -594,9 +595,9 @@ prefer_tag = generate_pre_tag(n, tag_id, customer_id)
 
 follow = generate_follow(n, customer_id)
 
-# comment = generate_comment(n, customer_id, vendor_id)
+comment = generate_comment(n, customer_id, vendor_id)
 
-# attitude = generate_attitude(n, comment_id, customer_id)
+attitude = generate_attitude(n, comment_id, customer_id)
 
 photo = generate_photo(n, used_id)
 
@@ -678,4 +679,3 @@ for i in photo:
     db.commit()
 
 db.close()
-
