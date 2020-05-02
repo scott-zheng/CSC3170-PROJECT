@@ -50,7 +50,20 @@ router.post('/addCustomer', (req, res) => {
   })
 })
 
-
+// Add Vendor with user_id
+router.post('/addVendor', (req, res) => {
+  var sql = $sql.vendor.add
+  var params = req.body
+  console.log('addVendor:', params)
+  conn.query(sql, [params.user_id], function (err, result) {
+    if (err) {
+      console.log(err)
+    }
+    if (result) {
+      jsonWrite(res, result)
+    }
+  })
+})
 
 // Find User
 router.post('/findUser', (req, res) => {

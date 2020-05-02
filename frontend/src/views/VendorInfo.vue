@@ -180,7 +180,7 @@ export default {
   },
     created: function() {
     // var id = 1
-    var id = sessionStorage.getItem('Vendor_id')
+    var id = sessionStorage.getItem('user_id')
     console.log(id)
     axios.post('/api/getVendorInfo',{
       vendor_id: id,
