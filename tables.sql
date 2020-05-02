@@ -22,7 +22,7 @@ CREATE TABLE User (
 -- Create Relation School
 CREATE TABLE School (
 	School_id int(11) NOT NULL,
-	School_name enum('SSE', 'SME', 'HSS', 'LHS') NOT NULL,
+	School_name enum('SSE', 'SME', 'HSS', 'LHS'),
     Director varchar(20),
     Contact varchar(20),
     PRIMARY KEY (School_id)
@@ -31,7 +31,7 @@ CREATE TABLE School (
 -- Create Relation College
 CREATE TABLE College (
 	College_id int(11) NOT NULL,
-	College_name enum('MUSE', 'DILLIGENT', 'SHAW', 'HARMONIA') NOT NULL,
+	College_name enum('MUSE', 'DILLIGENT', 'SHAW', 'HARMONIA'),
     Director varchar(20),
     Contact varchar(20),
     PRIMARY KEY (College_id)
@@ -40,11 +40,11 @@ CREATE TABLE College (
 -- Create Relation User
 CREATE TABLE Customer (
 	User_id int(11) NOT NULL,
-    Email varchar(50) NOT NULL,
-    Birthday date NOT NULL,
-    School int(11) NOT NULL,
-    College int(11) NOT NULL,
-    Gender enum('male', 'female') NOT NULL,
+    Email varchar(50),
+    Birthday date,
+    School int(11),
+    College int(11),
+    Gender enum('male', 'female'),
     -- Age date as (TIMESTAMPDIF(YEAR, Birthday, NOW())),
     PRIMARY KEY (User_id),
     FOREIGN KEY (User_id) REFERENCES User(User_id),
@@ -89,6 +89,9 @@ CREATE TABLE Follow(
     FOREIGN KEY (Follower_id) REFERENCES User(User_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+
+
 CREATE TABLE Category (
 	Category_id int(11) NOT NULL,
     Category_name varchar(40) NOT NULL,
@@ -98,7 +101,7 @@ CREATE TABLE Category (
 
 CREATE TABLE Vendor (
   User_id int(11) NOT NULL,
-    vname varchar(40) NOT NULL,
+    vname varchar(40) NULL,
     vaddress varchar(150) DEFAULT NULL,
     vphoneNo char(10) DEFAULT NULL,
     vservice varchar(128) DEFAULT NULL,
@@ -123,6 +126,7 @@ CREATE TABLE Preference_vendor (
   FOREIGN KEY (Customer_id) REFERENCES Customer(User_id),
   FOREIGN KEY (Vendor_id) REFERENCES Vendor(User_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 -- Create Relation Person
 CREATE TABLE Photo (
