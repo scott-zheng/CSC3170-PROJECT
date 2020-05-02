@@ -6,7 +6,7 @@
         src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
         slot="cover"
       /-->
-      <a href="#" slot="extra">Details</a>
+      <a @click="handleJump" href="/vendorInfo" slot="extra">Details</a>
         <p>Service: {{service}}</p>
         <p>Address: {{address}}</p>
         <p>Open Time: {{openTime}}</p>
@@ -25,28 +25,34 @@
 			},
 			name: {
 				type: String,
-				default: 'VendorName'
+				default: 'EmptyVendorName'
 			},
 			service: {
 				type: String,
-				default: 'VendorService'
+				default: 'EmptyVendorService'
 			},
 			address: {
 				type: String,
-				default: 'VendorAddress'
+				default: 'EmptyVendorAddress'
 			},
 			openTime: {
 				type: String,
-				default: 'VendorOpenHour'
+				default: 'EmptyVendorOpenHour'
 			},
 			closeTime: {
 				type: String,
-				default: 'VendorCloseHour'
+				default: 'EmptyVendorCloseHour'
 			},
 			phoneNo: {
 				type: String,
-				default: 'VendorPhoneNo'
+				default: 'EmptyVendorPhoneNo'
 			}
+		},
+		methods: {
+			handleJump() {
+				console.log("junp to: ", this.id)
+				sessionStorage.setItem('Vendor_id', this.id)
+			},
 		}
 	}
 </script>

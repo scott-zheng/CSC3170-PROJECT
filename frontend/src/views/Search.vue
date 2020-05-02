@@ -20,7 +20,7 @@
 				<ul class="ulVendor">
 					<!-- <vendorDiv> -->
 					<li class="liVendor" v-for="(item,index) in vendors" :key="index">
-						<vendorCard :id="User_id" :name="item.vname" :service="item.vservice" :address="item.vaddress" :openTime="item.venueOpenTime" :closeTime="item.venueCloseTime" :phoneNo="item.vphoneNo">
+						<vendorCard :id="item.User_id" :name="item.vname" :service="item.vservice" :address="item.vaddress" :openTime="item.venueOpenTime" :closeTime="item.venueCloseTime" :phoneNo="item.vphoneNo">
 						</vendorCard>
 					</li>
 					<!-- </vendorDiv> -->
@@ -44,13 +44,13 @@
         data() {
             return {
                 vendors: [{
-						User_id: 123,
-						vname: '711',
-						vservice: 'grocery',
-						vaddress: '22nd shopping road',
-						venueCloseTime: "21:00:00",
-						venueOpenTime: "10:00:00",
-						vphoneNo: "123456"
+						// User_id: 123,
+						// vname: '711',
+						// vservice: 'grocery',
+						// vaddress: '22nd shopping road',
+						// venueCloseTime: "21:00:00",
+						// venueOpenTime: "10:00:00",
+						// vphoneNo: "123456"
 					},
 				],
 				category: [{
