@@ -113,4 +113,52 @@ router.post('/findVendor', (req, res) => {
   })
 })
 
+// get tags
+router.get('/getTag', (req, res) => {
+  var sql = $sql.tag.all_tags_search
+  var params = req.body
+  console.log(params)
+  conn.query(sql, function (err, result) {
+    if (err) {
+      console.log(err)
+    }
+    if (result) {
+      console.log(result)
+      jsonWrite(res, result)
+    }
+  })
+})
+
+//get categories
+router.get('/getCategory', (req, res) => {
+  var sql = $sql.category.all_cats
+  var params = req.body
+  console.log(params)
+  conn.query(sql, function (err, result) {
+    if (err) {
+      console.log(err)
+    }
+    if (result) {
+      console.log(result)
+      jsonWrite(res, result)
+    }
+  })
+})
+
+// Search Vendor
+router.post('/searchVendor', (req, res) => {
+  var sql = $sql.vendor.search
+  var params = req.body
+  console.log(params)
+  conn.query(sql, [params.category, params.tag], function (err, result) {
+    if (err) {
+      console.log(err)
+    }
+    if (result) {
+      console.log(result)
+      jsonWrite(res, result)
+    }
+  })
+})
+
 module.exports = router

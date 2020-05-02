@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-card v-bind:title = "name" style="width: 300px">
+    <a-card v-bind:title = "name" style="width: 400px">
       <!--img
         alt="example"
         src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
@@ -9,7 +9,9 @@
       <a href="#" slot="extra">Details</a>
         <p>Service: {{service}}</p>
         <p>Address: {{address}}</p>
-        <p>Open Hour:{{openHour}}</p>
+        <p>Open Time: {{openTime}}</p>
+		<p>Close Time: {{closeTime}}</p>
+		<p>Phone Number: {{phoneNo}}</p>
     </a-card>
   </div>
 </template>
@@ -17,6 +19,10 @@
 <script>
 	export default {
 		props: {
+			id:{
+				type: Number,
+				default: 123
+			},
 			name: {
 				type: String,
 				default: 'VendorName'
@@ -29,9 +35,17 @@
 				type: String,
 				default: 'VendorAddress'
 			},
-			openHour: {
+			openTime: {
 				type: String,
 				default: 'VendorOpenHour'
+			},
+			closeTime: {
+				type: String,
+				default: 'VendorCloseHour'
+			},
+			phoneNo: {
+				type: String,
+				default: 'VendorPhoneNo'
 			}
 		}
 	}

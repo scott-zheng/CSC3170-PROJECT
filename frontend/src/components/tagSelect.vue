@@ -3,7 +3,7 @@
 		<!--a-select-option v-for="i in 25" :key="(i + 9).toString(36) + i">{{
       "tag" + i
     }}</a-select-option-->
-		<a-select-option v-for="(item, index) in tags" :key="index">{{item}}</a-select-option>
+		<a-select-option v-for="item in tags" :key="item.Tag_id">{{item.Tag_name}}</a-select-option>
 	</a-select>
 </template>
 <script>
@@ -11,12 +11,13 @@
 		props: {
 			tags: {
 				type: Array,
-				default: () => ["tag1", "tag2", "tag3"]
+				default: () => []
 			}
 		},
 		methods: {
 			handleChange(value) {
 				console.log(`selected ${value}`);
+				this.$emit("selectedTags", value);
 			},
 		},
 	};

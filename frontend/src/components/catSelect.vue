@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<a-select defaultValue="Please select a category" style="width: 240px" @change="handleChange">
-			<a-select-option v-for="(item, index) in categories" :key="index">{{item}}</a-select-option>
+		<a-select style="width: 240px" @change="handleChange" placeholder="Please select a category">
+			<a-select-option v-for="item in categories" :key="item.Category_id">{{item.Category_name}}</a-select-option>
 		</a-select>
 	</div>
 </template>
@@ -10,12 +10,13 @@
 		props: {
 			categories: {
 				type: Array,
-				default: () => ["cat0", "cat1"]
+				default: () => []
 			}
 		},
 		methods: {
 			handleChange(value) {
 				console.log(`selected ${value}`);
+				this.$emit("selectedCat", value);
 			},
 		},
 	};

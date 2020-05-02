@@ -8,19 +8,19 @@
                 <h1>Search Page</h1>
                 <block>
                 <selectDiv>
-					<catSelect :categories="category"></catSelect>
+					<catSelect :categories="category" @selectedCat = "handleCatChange"></catSelect>
 				</selectDiv>
 				<selectDiv>
-					<tagSelect :tags="tag"></tagSelect>
+					<tagSelect :tags="tag" @selectedTags = "handleTagChange"></tagSelect>
 				</selectDiv>
-                <a-button type="primary" @click="venforVisitable=true">Submit</a-button>
+                <a-button type="primary" @click="handelSubmit">Submit</a-button>
                 </block>
                 <block v-if="venforVisitable">
 				<h3> {{vendors.length}} {{vendors.length > 1 ? 'results' : 'result'}}</h3>
 				<ul class="ulVendor">
 					<!-- <vendorDiv> -->
 					<li class="liVendor" v-for="(item,index) in vendors" :key="index">
-						<vendorCard :name="item.name" :service="item.service" :address="item.address" :openHour="item.openHour">
+						<vendorCard :id="User_id" :name="item.vname" :service="item.vservice" :address="item.vaddress" :openTime="item.venueOpenTime" :closeTime="item.venueCloseTime" :phoneNo="item.vphoneNo">
 						</vendorCard>
 					</li>
 					<!-- </vendorDiv> -->
@@ -37,27 +37,43 @@
 	import tagSelect from '@/components/tagSelect.vue'
 	import vendorCard from '@/components/vendorCard.vue'
     import Header from '@/components/Header'
+	import axios from 'axios'
 	
 	export default {
 		name: 'Search',
         data() {
             return {
                 vendors: [{
-						name: '711',
-						service: 'grocery',
-						address: '22nd shopping road',
-						openHour: '7 am ~ 11pm',
-					},
-					{
-						name: 'pandora',
-						service: 'restuarant',
-						address: '11nd shopping road',
-						openHour: '8 am ~ 7pm',
+						User_id: 123,
+						vname: '711',
+						vservice: 'grocery',
+						vaddress: '22nd shopping road',
+						venueCloseTime: "21:00:00",
+						venueOpenTime: "10:00:00",
+						vphoneNo: "123456"
 					},
 				],
-				category: ["cafe", "canteen", "shop"],
-				tag: ["cosy", "comfortable", "dirty", "expensive"],
-                venforVisitable: false
+				category: [{
+						Category_id: 123,
+						Category_name: 'cafe'
+					},
+					{
+						Category_id: 156,
+						Category_name: 'canteen'
+					}
+				],
+				tag: [{
+						Tag_id: 235,
+						Tag_name: 'cosy'
+					},
+					{
+						Tag_id: 290,
+						Tag_name: 'dirty'
+					}
+				],
+                venforVisitable: false,
+				selectedCat: 0,
+				selectedTag: [],
             }
         },
 		components: {
@@ -65,6 +81,50 @@
 			tagSelect,
 			vendorCard,
             Header
+		},
+		methods: {
+			handleCatChange(catId) {
+				console.log("search page cat update: ", catId)
+				this.selectedCat = catId
+				console.log("data cat: ", this.selectedCat)
+			},
+			handleTagChange(tags) {
+				console.log("search page tags update: ", tags)
+				this.selectedTag = tags
+				console.log("data Tags: ", this.selectedTag)
+			},
+			getAllTags() {
+				axios.get('/api/getTag').then((response) => {
+					console.log(response.data[0])
+					this.tag = response.data
+					console.log("receive tags: ", this.tag[1])
+				})
+			},
+			getAllcats() {
+				axios.get('/api/getCategory').then((response) => {
+					console.log(response.data[0])
+					this.category = response.data
+				})
+			},
+			getVendors() {
+				axios.post('/api/searchVendor',{
+					category: this.selectedCat,
+					tag: this.selectedTag,
+				}).then((response) => {
+					console.log(response.data)
+					this.vendors = response.data
+				})
+			},
+			handelSubmit() {
+				console.log("submit category:", this.selectedCat)
+				console.log("submit tags:", this.selectedTag)
+				this.getVendors()
+				this.venforVisitable=true
+			},
+		},
+		created:function(){
+			this.getAllTags()
+			this.getAllcats()
 		}
 	}
 </script>
