@@ -605,7 +605,6 @@ db = pymysql.connect("localhost", "root", "QsCvHu...123", "databaseproj")
 
 cursor = db.cursor()
 
-
 #insert school
 sql = "INSERT into School (School_id, School_name, Director, Contact) values (%s, %s, %s, %s)"
 for i in school:
@@ -637,7 +636,7 @@ for i in customer:
     db.commit()
 
 # insert vendor
-sql = "INSERT INTO Vendor (Vendor_id, vname, vaddress, vphoneNo, vservice, venueOpenTime, venueCloseTime) values (%s, %s, %s, %s, %s, %s, %s)"
+sql = "INSERT INTO Vendor (User_id, vname, vaddress, vphoneNo, vservice, venueOpenTime, venueCloseTime) values (%s, %s, %s, %s, %s, %s, %s)"
 for i in vendor:
     cursor.execute(sql, i)
     db.commit()
@@ -679,3 +678,4 @@ for i in photo:
     db.commit()
 
 db.close()
+
