@@ -1,12 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import PersonalInfo from '../views/PersonalInfo.vue'
-import Main from '../views/Main.vue'
 import Vendor from '../views/Vendor.vue'
-import test from '../views/test.vue'
 import Search from '../views/Search.vue'
 import VendorInfo from '../views/VendorInfo.vue'
 
@@ -14,16 +11,6 @@ import VendorInfo from '../views/VendorInfo.vue'
 Vue.use(VueRouter)
 
   const routes = [
-  {
-    path: '/',
-    name: 'Main',
-    component: Main
-  },  
-  {
-    path: '/test',
-    name: 'test',
-    component: test
-  },
   {
     path: '/login',
     name: 'Login',
@@ -43,14 +30,6 @@ Vue.use(VueRouter)
     path: '/vendor',
     name: 'Vendor',
     component: Vendor
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
 	path: '/search',
