@@ -89,9 +89,6 @@ CREATE TABLE Follow(
     FOREIGN KEY (Follower_id) REFERENCES User(User_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
-
-
 CREATE TABLE Category (
 	Category_id int(11) NOT NULL,
     Category_name varchar(40) NOT NULL,
@@ -126,22 +123,6 @@ CREATE TABLE Preference_vendor (
   FOREIGN KEY (Customer_id) REFERENCES Customer(User_id),
   FOREIGN KEY (Vendor_id) REFERENCES Vendor(User_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO Vendor (Vendor_id, vname, vaddress, vphoneNo, vservice, venueOpenTime, venueCloseTime) VALUES
-(1001, 'Pandora Plaza', 'Lower Campus - Student\'s Activity Bldg. 1F', '3122660302', 'High Quality Food Supply', '10:00:00', '23:00:00'),
-(1002, 'LeTian #1 Cafeteria', 'Lower Campus - LeTian Bldg. 1F', '3122661240', 'Food Supply with Reasonable Price', '10:30:00', '21:00:00');
-
-INSERT INTO Category (Category_id, Category_name, Category_desc) VALUES
-(1, 'Consult', 'Offering Consulting Services'),
-(2, 'Food Supply', 'Providing food supply');
-
-INSERT INTO `preference_vendor` (Customer_id, Vendor_id) VALUES
-(1, 1001),
-(2, 1002);
-
-INSERT INTO Vendor_category (User_id, Category_id) VALUES
-(1001, 1),
-(1002, 2);
 
 -- Create Relation Person
 CREATE TABLE Photo (
