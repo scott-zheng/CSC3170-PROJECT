@@ -16,11 +16,15 @@ export default {
   },
   methods: {
     toUser() {
-        this.$router.push({path:'/personalinfo'}).catch(err => {err})
+      var user_type = sessionStorage.getItem("user_type")
+      var path = (user_type=='customer') ? '/personalinfo' : '/vendorinfo'
+      this.$router.push({path: path}).catch(err => {err})
     },
     logout() {
       // clear login information here
+      sessionStorage.clear()
 
+      // jump to login page
       this.$router.push({path:'/login'}).catch(err => {err})
     }
   },
