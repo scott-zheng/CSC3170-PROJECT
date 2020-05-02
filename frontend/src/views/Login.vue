@@ -11,14 +11,22 @@
         <a-form-model-item has-feedback label="Password" prop="pass">
           <a-input v-model="loginForm.pass" type="password" autocomplete="off" />
         </a-form-model-item>
+        <a-radio-group style="margin-bottom: 25px" name="radioGroup" default-value="customer" @change="changeType">
+          <a-radio value="customer">
+            Customer
+          </a-radio>
+          <a-radio value="vendor">
+            Vendor
+          </a-radio>
+        </a-radio-group>
         <a-form-model-item>
           <a-button type="primary" @click="submitForm('loginModel')">
           Submit
           </a-button>
-          <a-button @click="resetForm('loginModel')">
+          <a-button @click="resetForm('loginModel')" style="margin-left: 20px;">
           Reset
           </a-button>
-          <a-button @click="toRegister()">
+          <a-button @click="toRegister()" style="margin-left: 20px;">
           Register
           </a-button>
         </a-form-model-item>
@@ -30,12 +38,12 @@
 
 <script>
 // @ is an alias to /src
-// import Header from '@/components/Header'
+import axios from 'axios'
 
 export default {
   name: 'Login',
   components: {
-    // Header
+
   },
   data() {
     let validatePass = (rule, value, callback) => {
@@ -50,8 +58,6 @@ export default {
         callback(new Error('Please input the phone number'));
       } else {
         if (this.loginForm.phone !== '') {
-          // 在第2行中的ref绑定了一个DOM组件loginModel，并可以用$refs来调用使用了ref绑定的元素和组件。
-          // https://www.jianshu.com/p/623c8b009a85
           this.$refs.loginModel.validateField('pass');
           callback();
         }
@@ -59,6 +65,7 @@ export default {
       }
     };
     return {
+      userType: 'customer',
       loginForm: {
         phone: '',
         pass: '',
@@ -74,11 +81,67 @@ export default {
     };
   },
   methods: {
+    changeType(e) {
+      console.log(`checked = ${e.target.value}`);
+      this.userType= e.target.value;
+    },
+    testLogin() {
+      return new Promise(user_id => {
+        axios.post('/api/findUser',{
+          phone: this.loginForm.phone,
+          password: this.loginForm.pass,
+        }).then((response) => {
+          console.log(response)
+
+          var content = response.data;
+          if (content.length != 0) {
+            var id = content[0].User_id;
+            console.log('usertype:', this.userType)
+            console.log('user_id:', id)
+            
+            // user type check
+            var valid;
+            if (this.userType == 'customer') {
+              axios.post('/api/findCustomer', {user_id: id}).then((res) => {
+                valid = (res.data.length != 0)
+                console.log('valid:', valid)
+                if (valid) {
+                  user_id(id);
+                  this.$message.success("Successfully login!");
+                }
+                else this.$message.error("Incorrect phone number or password.");
+              })
+            } else if (this.userType == 'vendor') {
+              axios.post('/api/findVendor', {user_id: id}).then((res) => {
+                valid = (res.data.length != 0)
+                console.log('valid:', valid)
+                if (valid) {
+                  user_id(id);
+                  this.$message.success("Successfully login!");
+                }
+                else this.$message.error("Incorrect phone number or password.");
+              })
+            }
+          } 
+          else this.$message.error("Incorrect phone number or password.");
+        })
+      })
+    },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$router.push({path:'/search'}).catch(err => {err})
-          this.$message.success('Login successful!');
+          // test login validity
+          this.testLogin().then((user_id) => {
+            console.log("user_id_2:", user_id);
+
+            if (user_id) {  // successfully login
+              // set user session id and user type
+              sessionStorage.setItem("user_id", user_id);
+              sessionStorage.setItem("user_type", this.userType);
+              // jump to search page
+              this.$router.push({path:'/search'}).catch(err => {err})
+            }
+          })
         } else {
           this.$message.error('Login error');
           return false;
@@ -88,9 +151,9 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-    toRegister(){
+    toRegister() {
       this.$router.push({path:'/register'}).catch(err => {err})
-    }
+    },
   },
 }
 </script>
