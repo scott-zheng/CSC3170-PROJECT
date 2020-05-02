@@ -77,6 +77,7 @@ export default {
       value: '',
       rateValue: 2,
       moment,
+      username: '',
       vendorInfo: {
         id: '',
         name: '',
@@ -100,14 +101,23 @@ export default {
         this.submitting = false;
         this.comments = [
           {
-            author: 'hrbattery',
-            avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-            content: this.value,
-            datetime: moment().fromNow(),
+            person_name: this.username,
+            Content: this.value,
+            time: moment(),
             rate: this.rateValue
           },
           ...this.comments,
         ];
+        // var id = 15261693
+        // var userid = 99897204
+        var userid = sessionStorage.getItem('user_id')
+        var id = sessionStorage.getItem('Vendor_id')
+        axios.post('/api/setComment',{
+          vendor_id: id,
+          customer_id: userid,
+          content: this.value,
+          time: moment()
+        })
         this.value = '';
       }, 1000);
     },
@@ -119,7 +129,9 @@ export default {
     }
   },
   created: function() {
-    // var id = 52658172
+    // var id = 15261693
+    // var userid = 99897204
+    var userid = sessionStorage.getItem('user_id')
     var id = sessionStorage.getItem('Vendor_id')
     console.log(id)
     axios.post('/api/getVendorInfo',{
@@ -140,6 +152,13 @@ export default {
     }).then((response) => {
       console.log(response.data);
       this.comments = response.data
+    }),
+    axios.post('/api/getPersonInfo', {
+      user_id: userid,
+    }).then((response) => {
+      var res = response.data[0];
+      console.log(res);
+      this.username = res.Person_Name;
     })
   },
   components: {

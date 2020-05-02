@@ -276,7 +276,7 @@ export default {
             var res = response.data[0];
             console.log(res);
             this.$data.infoForm.id = res.User_id;
-            this.$data.infoForm.name = res.person_name;
+            this.$data.infoForm.name = res.Person_Name;
             this.$data.infoForm.phone = res.Phone_number;
             this.$data.infoForm.email = res.Email;
             this.$data.infoForm.birth = res.Birthday;
