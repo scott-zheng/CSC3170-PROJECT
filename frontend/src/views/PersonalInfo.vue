@@ -23,24 +23,6 @@
           <a-descriptions-item label="CollegeContact">{{infoForm.collegeContact}}</a-descriptions-item>
         </a-descriptions>
         <a-button @click="modifyFormVisible=true">Modify</a-button>
-        <p style="font-size: 20px; padding-top:55px">My comments</p>
-        <a-list
-          v-if="comments.length"
-          :dataSource="comments"
-          :header="`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`"
-          itemLayout="horizontal"
-        >
-          <a-list-item slot="renderItem" slot-scope="item">
-            <a-comment
-              :author="item.author"
-              :avatar="item.avatar"
-              :content="item.content"
-              :datetime="item.datetime"
-            >
-            </a-comment>
-            <a-rate v-model="item.rate" />
-          </a-list-item>
-        </a-list>
         <!-- Modify form for information-->
         <a-modal
           title="Modify form for information"
@@ -120,7 +102,6 @@
 
 <script>
 import Header from '@/components/Header'
-import moment from 'moment';
 import axios from 'axios'
 export default {
   name: 'PersonalInfo',
@@ -182,22 +163,6 @@ export default {
       }
     };
     return {
-      comments: [
-        {
-          author: 'hrbattery',
-          avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-          content: "It's a good palce to go",
-          datetime: moment().fromNow(),
-          rate: 5
-        },
-                {
-          author: 'hrbattery',
-          avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-          content: "sry",
-          datetime: moment().fromNow(),
-          rate: 2
-        },
-      ],
       modifyFormVisible:false,
       rules: {
         name: [{ validator: validateName, trigger: 'blur' }],

@@ -72,7 +72,7 @@
 					}
 				],
                 venforVisitable: false,
-				selectedCat: 0,
+				selectedCat: -1,
 				selectedTag: [],
             }
         },
@@ -116,7 +116,7 @@
 				})
 			},
 			handelSubmit() {
-				if (this.selectedCat == 0 || this.selectedTag.length == 0) {
+				if (this.selectedCat == -1 || this.selectedTag.length == 0) {
 					this.venforVisitable = false
 					return
 				}

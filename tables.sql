@@ -140,7 +140,7 @@ CREATE TABLE Photo (
 
 -- Create Relation Comment
 CREATE TABLE Comment (
-    Comment_id int(11) NOT NULL,
+    Comment_id int(11) NOT NULL AUTO_INCREMENT,
     Vendor_id int(11) NOT NULL,
     Customer_id int(11) NOT NULL,
     Content varchar(250) NOT NULL,

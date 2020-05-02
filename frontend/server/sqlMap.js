@@ -3,12 +3,12 @@ var sqlMap = {
     user: {
       add: 'insert into User(Person_Name, Phone_number, Person_Password) values (?, ?, ?)',
       find: 'select User_id from User where Phone_number = ? and Person_Password = ?',
-      getPersonInfo: 'select *, b.contact as school_contact, b.director as school_director, c.contact as college_contact, c.director as college_director from user o join customer a join School b join College c on o.user_id=a.user_id and a.school=b.school_id and a.college=c.college_id where a.User_id = ?;',
+      getPersonInfo: 'select *, b.contact as school_contact, b.director as school_director, c.contact as college_contact, c.director as college_director from user o join customer a join School b join College c on o.user_id=a.user_id and a.school=b.school_id and a.college=c.college_id where a.User_id = ?',
       setPersonInfo1: 'update user set Person_Name = ?, Phone_number = ?, Person_Password = ? where User_id = ?',
       setPersonInfo2: 'update customer set email = ?, birthday = ?, school = ?, college = ?, gender = ? where User_id = ?',
     },
     customer: {
-      add: 'insert into Customer(User_id) values (?)',
+      add: 'insert into Customer(User_id, school, college) values (?, 0, 0)',
       find: 'select User_id from Customer where User_id = ?',
     },
     vendor: {

@@ -269,7 +269,7 @@ router.post('/setComment', (req, res) => {
   var sql = $sql.comment.setComment
   var params = req.body
   console.log(params)
-  conn.query(sql, [params.vendor_id, params.customer_id, params.content, moment(params.time)], function (err, result) {
+  conn.query(sql, [params.vendor_id, params.customer_id, params.content, moment(params.time).format("YYYY-MM-DD HH:mm:ss")], function (err, result) {
     if (err) {
       console.log(err)
     }
