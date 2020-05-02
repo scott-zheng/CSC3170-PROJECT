@@ -142,3 +142,36 @@ INSERT INTO `preference_vendor` (Customer_id, Vendor_id) VALUES
 INSERT INTO Vendor_category (User_id, Category_id) VALUES
 (1001, 1),
 (1002, 2);
+
+-- Create Relation Person
+CREATE TABLE Photo (
+    Photo_id int(11) NOT NULL,
+    Content varchar(50) NOT NULL,
+    `Time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    User_id int(11) NOT NULL,
+    PRIMARY KEY (Photo_id),
+    FOREIGN KEY (User_id) REFERENCES User(User_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Create Relation Comment
+CREATE TABLE Comment (
+    Comment_id int(11) NOT NULL,
+    Vendor_id int(11) NOT NULL,
+    Customer_id int(11) NOT NULL,
+    Content varchar(250) NOT NULL,
+    `Time` datetime NOT NULL,
+    PRIMARY KEY (Comment_id),
+    FOREIGN KEY (Vendor_id) REFERENCES Vendor(Vendor_id),
+    FOREIGN KEY (Customer_id) REFERENCES Customer(User_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Create Relation Attitude_toward
+CREATE TABLE Attitude_toward (
+    Comment_id int(11) NOT NULL,
+    Customer_id int(11) NOT NULL,
+    `Like` tinyint(1) NOT NULL,
+    Dislike tinyint(1) NOT NULL,
+    PRIMARY KEY (Comment_id, Customer_id),
+    FOREIGN KEY (Comment_id) REFERENCES Comment(Comment_id),
+    FOREIGN KEY (Customer_id) REFERENCES Customer(User_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
