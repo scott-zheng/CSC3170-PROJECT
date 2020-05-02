@@ -12,7 +12,7 @@ USE `databaseproj`;
 
 -- Create Relation Person
 CREATE TABLE User (
-	User_id int(11) NOT NULL,
+	User_id int(11) NOT NULL AUTO_INCREMENT,
     Person_Name varchar(40) NOT NULL,
     Phone_number varchar(11) DEFAULT NULL,
     Person_Password varchar(30) NOT NULL,
