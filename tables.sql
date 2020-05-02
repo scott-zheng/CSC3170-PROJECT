@@ -161,7 +161,7 @@ CREATE TABLE Comment (
     Content varchar(250) NOT NULL,
     `Time` datetime NOT NULL,
     PRIMARY KEY (Comment_id),
-    FOREIGN KEY (Vendor_id) REFERENCES Vendor(Vendor_id),
+    FOREIGN KEY (Vendor_id) REFERENCES Vendor(User_id),
     FOREIGN KEY (Customer_id) REFERENCES Customer(User_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
