@@ -9,7 +9,10 @@ var sqlMap = {
     },
     vendor: {
       comments: 'select comments from vendor where vendor_id = ?',
-      search: 'select vendor_id from vendor where category = ? and tag = ?'
+      search: 'select vendor_id from vendor where category = ? and tag = ?',
+      getVendorInfo: 'select * from vendor a inner join user b on a.user_id = b.user_id where a.user_id = ?',
+      setVendorInfo1: 'update user set Person_Name = ?, Phone_number = ?, Person_Password = ? where User_id = ?',
+      setVendorInfo2: 'update vendor set vname = ?, vaddress = ?, vphoneno = ?, vservice = ?, venueopentime = ?, venueclosetime = ? where user_id = ?'
     },
     tag: {
       all_tags: 'select Tag_name from Tag'

@@ -104,6 +104,54 @@ router.post('/setPersonInfo', (req, res) => {
   })
 })
 
+router.post('/getVendorInfo', (req, res) => {
+  var sql = $sql.vendor.getVendorInfo
+  // var sql = 'insert into User(Person_Name, Phone_number, Person_Password) values (4, 22222222222, 121212121)';
+  var params = req.body
+  conn.query(sql, [params.vendor_id], function (err, result) {
+    if (err) {
+      console.log(err)
+    }
+    if (result) {
+      console.log(result)
+      jsonWrite(res, result)
+    }
+  })
+})
+
+router.post('/setVendorInfo', (req, res) => {
+  var sql1 = $sql.vendor.setVendorInfo1
+  var sql2 = $sql.vendor.setVendorInfo2
+  // var sql = 'insert into User(Person_Name, Phone_number, Person_Password) values (4, 22222222222, 121212121)';
+  var params = req.body
+  console.log(params)
+  conn.query(sql1, [params.personname, params.personphone, params.password, params.id], function (err, result) {
+    if (err) {
+      console.log(err)
+    }
+    if (result) {
+      console.log(result)
+    }
+  })
+  conn.query(sql2, [params.name, params.address, params.phone, params.service, params.opentime, params.closetime, params.id], function (err, result) {
+    if (err) {
+      console.log(err)
+    }
+    if (result) {
+      console.log(result)
+      conn.query($sql.vendor.getVendorInfo, [params.id], function (err, result) {
+        if (err) {
+          console.log(err)
+        }
+        if (result) {
+          console.log(result)
+          jsonWrite(res, result)
+        }
+      })
+    }
+  })
+})
+
 router.post('/cancelReader', (req, res) => {
   var sql = $sql.reader.delete
   var params = req.body

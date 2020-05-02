@@ -262,20 +262,6 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert('submit!');
-          // this.$data.modifyFormVisible = false;
-          // this.infoForm.birth = this.modifyInfoForm.birth.format("YYYY-MM-DD");
-          // this.infoForm.name = this.modifyInfoForm.name;
-          // this.infoForm.email = this.modifyInfoForm.email;
-          // this.infoForm.phone = this.modifyInfoForm.phone;
-          // this.infoForm.gender = this.modifyInfoForm.gender;
-          // this.infoForm.school = this.modifyInfoForm.school;
-          // this.infoForm.college = this.modifyInfoForm.college;
-          // this.infoForm.age = this.modifyInfoForm.birth.fromNow().split(' ')[0];
-          // this.infoForm.schoolDirector = 'Xu Yangsheng';
-          // this.infoForm.collegeDirector = 'Gu Yang';
-          // this.infoForm.schoolContact = '0755-84273000';
-          // this.infoForm.collegeContact = '0755-84273912';
           axios.post('/api/setPersonInfo',{
             id: this.infoForm.id,
             birth: this.modifyInfoForm.birth.format("YYYY-MM-DD"),
@@ -301,9 +287,11 @@ export default {
             this.$data.infoForm.college = res.College_name;
             this.$data.infoForm.collegeDirector = res.college_director;
             this.$data.infoForm.collegeContact = res.college_contact;
+            this.$data.modifyFormVisible = false;
           })
+          this.$message.success('submit!');
         } else {
-          console.log('error submit!!');
+          this.$message.error('error submit!');
           this.$data.modifyFormVisible = false;
           return false;
         }
@@ -313,9 +301,9 @@ export default {
       this.$refs[formName].resetFields();
     },
   },
-  mounted: function() {
+  created: function() {
     var id = 98212489
-    // var id = sessionStorage.getItem('user_id')
+    // var id = sessionStorage.getItem('User_id')
     console.log(id)
     axios.post('/api/getPersonInfo',{
       user_id: id,

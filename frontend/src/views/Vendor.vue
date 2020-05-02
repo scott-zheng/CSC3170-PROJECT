@@ -5,7 +5,7 @@
         <Header class="header"/>
       </a-layout-header>
       <a-layout-content class="layout-content">
-        <p style="font-size: 25px;">CIDE</p>
+        <p style="font-size: 25px;">{{vendorInfo.name}}</p>
         <a style = "float:right;"><router-link to='/vendorinfo'>Edit</router-link></a>
         <img
           alt="example"
@@ -13,11 +13,13 @@
           width="20%" height="20%"
         />
         <a-descriptions title="Vendor Info">
-          <a-descriptions-item label="Service">Startup Guidance</a-descriptions-item>
+          <a-descriptions-item label="Service">{{vendorInfo.service}}</a-descriptions-item>
           <a-descriptions-item label="Address">
-            Letian Bldg. 3F No:1597 Letian Bldg.
+            {{vendorInfo.address}}
           </a-descriptions-item>
-          <a-descriptions-item label="Tel">1380919333</a-descriptions-item>
+          <a-descriptions-item label="Tel">{{vendorInfo.tel}}</a-descriptions-item>
+          <a-descriptions-item label="Open time">{{vendorInfo.opentime}}</a-descriptions-item>
+          <a-descriptions-item label="Close time">{{vendorInfo.closetime}}</a-descriptions-item>
         </a-descriptions>
         <a-button @click="checkin" type="primary">
           Check in
@@ -66,7 +68,7 @@
 <script>
 import moment from 'moment';
 import Header from '@/components/Header'
-
+import axios from 'axios'
 export default {
   data() {
     return {
@@ -75,6 +77,15 @@ export default {
       value: '',
       rateValue: 2,
       moment,
+      vendorInfo: {
+        id: '',
+        name: '',
+        service: '',
+        address: '',
+        tel: '',
+        opentime: '',
+        closetime: ''
+      }
     };
   },
   methods: {
@@ -106,6 +117,24 @@ export default {
     checkin() {
       this.$message.success('Checkin Success!');
     }
+  },
+  created: function() {
+    var id = 1
+    // var id = sessionStorage.getItem('Vendor_id')
+    console.log(id)
+    axios.post('/api/getVendorInfo',{
+      vendor_id: id,
+    }).then((response) => {
+      var res = response.data[0];
+      console.log(res);
+      this.$data.vendorInfo.id = res.User_id;
+      this.$data.vendorInfo.name = res.vname;
+      this.$data.vendorInfo.address = res.vaddress;
+      this.$data.vendorInfo.tel = res.vphoneNo;
+      this.$data.vendorInfo.service = res.vservice;
+      this.$data.vendorInfo.opentime = res.venueOpenTime;
+      this.$data.vendorInfo.closetime = res.venueCloseTime;
+    })
   },
   components: {
     Header

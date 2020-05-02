@@ -15,9 +15,13 @@
         <a-descriptions title="Vendor Info" bordered>
           <a-descriptions-item label="ID">{{infoForm.id}}</a-descriptions-item>
           <a-descriptions-item label="Name">{{infoForm.name}}</a-descriptions-item>
+          <a-descriptions-item label="User name">{{infoForm.personname}}</a-descriptions-item>
+          <a-descriptions-item label="User phone">{{infoForm.personphone}}</a-descriptions-item>
           <a-descriptions-item label="Service">{{infoForm.service}}</a-descriptions-item>
           <a-descriptions-item label="Address">{{infoForm.address}}</a-descriptions-item>
           <a-descriptions-item label="Tel" :span="2"> {{infoForm.phone}}</a-descriptions-item>
+          <a-descriptions-item label="Open time" :span="2"> {{infoForm.phone}}</a-descriptions-item>
+          <a-descriptions-item label="Close time" :span="2"> {{infoForm.phone}}</a-descriptions-item>
         </a-descriptions>
         <a-button @click="modifyFormVisible=true">Modify</a-button>
         <!-- Modify form for information-->
@@ -33,14 +37,32 @@
               <a-form-model-item has-feedback label="Name">
                 <a-input v-model="modifyInfoForm.name" autocomplete="off" />
               </a-form-model-item>
+              <a-form-model-item has-feedback label="User Name">
+                <a-input v-model="modifyInfoForm.personname" autocomplete="off" />
+              </a-form-model-item>
+              <a-form-model-item has-feedback label="User Phone">
+                <a-input v-model="modifyInfoForm.personphone" autocomplete="off" />
+              </a-form-model-item>
+              <a-form-model-item has-feedback label="Password" prop="pass">
+                <a-input v-model="modifyInfoForm.pass" type="password" autocomplete="off" />
+              </a-form-model-item>
+              <a-form-model-item has-feedback label="Confirm Password" prop="pass2">
+                <a-input v-model="modifyInfoForm.pass2" type="password" autocomplete="off" />
+              </a-form-model-item>
               <a-form-model-item has-feedback label="Service">
                 <a-input v-model="modifyInfoForm.service" autocomplete="off" />
               </a-form-model-item>
               <a-form-model-item has-feedback label="Address">
                 <a-input v-model="modifyInfoForm.address" autocomplete="off" />
               </a-form-model-item>
-              <a-form-model-item has-feedback label="Tel" prop="phone">
+              <a-form-model-item has-feedback label="Tel">
                 <a-input v-model="modifyInfoForm.phone" autocomplete="off" />
+              </a-form-model-item>
+              <a-form-model-item has-feedback label="Open time">
+                <a-time-picker :default-open-value="moment('00:00:00', 'HH:mm:ss')" v-model="modifyInfoForm.opentime" autocomplete="off" />
+              </a-form-model-item>
+              <a-form-model-item has-feedback label="Close time">
+                <a-time-picker :default-open-value="moment('00:00:00', 'HH:mm:ss')" v-model="modifyInfoForm.closetime" autocomplete="off" />
               </a-form-model-item>
               <a-form-model-item>
                 <a-button type="primary" @click="submitForm('modifyInfoModel')">
@@ -64,7 +86,8 @@
 
 <script>
 import Header from '@/components/Header'
-
+import axios from 'axios'
+import moment from 'moment';
 export default {
   name: 'PersonalInfo',
   data() {
@@ -75,13 +98,23 @@ export default {
         name: 'CIDE',
         phone: '1380919333',
         service: 'Startup Guidance',
-        address: 'Letian Bldg. 3F No:1597 Letian Bldg.'
+        address: 'Letian Bldg. 3F No:1597 Letian Bldg.',
+        opentime: '',
+        closetime: '',
+        personname: '',
+        personphone: ''
       },
       modifyInfoForm: {
         name: '',
+        personname: '',
+        personphone: '',
+        pass: '',
+        pass2: '',
         phone: '',
         service: '',
-        address: ''
+        address: '',
+        opentime: '',
+        closetime: ''
       }
       // layout: {
       //   labelCol: { span: 4 },
@@ -90,9 +123,10 @@ export default {
     };
   },
   components: {
-    Header
+    Header,
   },
   methods: {
+    moment,
     onChange(e) {
       console.log(`checked = ${e.target.value}`);
     },
@@ -108,10 +142,33 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert('submit!');
-          this.$data.modifyFormVisible = false;
+          axios.post('/api/setVendorInfo',{
+            id: this.infoForm.id,
+            personname: this.modifyInfoForm.personname,
+            personphone: this.modifyInfoForm.personphone,
+            password: this.modifyInfoForm.pass,
+            name : this.modifyInfoForm.name,
+            phone : this.modifyInfoForm.phone,
+            service : this.modifyInfoForm.service,
+            address : this.modifyInfoForm.address,
+            opentime : this.modifyInfoForm.opentime.format('hh:mm:ss'),
+            closetime : this.modifyInfoForm.closetime.format('hh:mm:ss'),
+          }).then((response) => {
+            var res = response.data[0];
+            console.log(res);
+            this.$data.infoForm.id = res.User_id;
+            this.$data.infoForm.name = res.vname;
+            this.$data.infoForm.address = res.vaddress;
+            this.$data.infoForm.phone = res.vphoneNo;
+            this.$data.infoForm.service = res.vservice;
+            this.$data.infoForm.opentime = res.venueOpenTime;
+            this.$data.infoForm.closetime = res.venueCloseTime;
+            this.$data.infoForm.personname = res.Person_Name;
+            this.$data.infoForm.personphone = res.Phone_number;
+          })
+          this.$message.success('submit!');
         } else {
-          console.log('error submit!!');
+          this.$message.error('error submit!');
           this.$data.modifyFormVisible = false;
           return false;
         }
@@ -120,7 +177,27 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields();
     },
-  }
+  },
+    created: function() {
+    var id = 1
+    // var id = sessionStorage.getItem('Vendor_id')
+    console.log(id)
+    axios.post('/api/getVendorInfo',{
+      vendor_id: id,
+    }).then((response) => {
+      var res = response.data[0];
+      console.log(res);
+      this.$data.infoForm.id = res.User_id;
+      this.$data.infoForm.name = res.vname;
+      this.$data.infoForm.address = res.vaddress;
+      this.$data.infoForm.phone = res.vphoneNo;
+      this.$data.infoForm.service = res.vservice;
+      this.$data.infoForm.opentime = res.venueOpenTime;
+      this.$data.infoForm.closetime = res.venueCloseTime;
+      this.$data.infoForm.personname = res.Person_Name;
+      this.$data.infoForm.personphone = res.Phone_number;
+    })
+  },
 }
 </script>
 
