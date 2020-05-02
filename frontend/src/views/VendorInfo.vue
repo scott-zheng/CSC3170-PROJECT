@@ -20,8 +20,8 @@
           <a-descriptions-item label="Service">{{infoForm.service}}</a-descriptions-item>
           <a-descriptions-item label="Address">{{infoForm.address}}</a-descriptions-item>
           <a-descriptions-item label="Tel" :span="2"> {{infoForm.phone}}</a-descriptions-item>
-          <a-descriptions-item label="Open time" :span="2"> {{infoForm.phone}}</a-descriptions-item>
-          <a-descriptions-item label="Close time" :span="2"> {{infoForm.phone}}</a-descriptions-item>
+          <a-descriptions-item label="Open time" :span="2"> {{infoForm.opentime}}</a-descriptions-item>
+          <a-descriptions-item label="Close time" :span="2"> {{infoForm.closetime}}</a-descriptions-item>
         </a-descriptions>
         <a-button @click="modifyFormVisible=true">Modify</a-button>
         <!-- Modify form for information-->

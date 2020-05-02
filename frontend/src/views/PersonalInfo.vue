@@ -302,8 +302,8 @@ export default {
     },
   },
   created: function() {
-    var id = 98212489
-    // var id = sessionStorage.getItem('User_id')
+    // var id = 98212489
+    var id = sessionStorage.getItem('user_id')
     console.log(id)
     axios.post('/api/getPersonInfo',{
       user_id: id,

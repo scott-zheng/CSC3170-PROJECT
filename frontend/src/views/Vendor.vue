@@ -6,7 +6,6 @@
       </a-layout-header>
       <a-layout-content class="layout-content">
         <p style="font-size: 25px;">{{vendorInfo.name}}</p>
-        <a style = "float:right;"><router-link to='/vendorinfo'>Edit</router-link></a>
         <img
           alt="example"
           src="../assets/cide.jpg"
@@ -108,8 +107,6 @@ export default {
           },
           ...this.comments,
         ];
-        // var id = 15261693
-        // var userid = 99897204
         var userid = sessionStorage.getItem('user_id')
         var id = sessionStorage.getItem('Vendor_id')
         axios.post('/api/setComment',{
@@ -129,8 +126,6 @@ export default {
     }
   },
   created: function() {
-    // var id = 15261693
-    // var userid = 99897204
     var userid = sessionStorage.getItem('user_id')
     var id = sessionStorage.getItem('Vendor_id')
     console.log(id)
