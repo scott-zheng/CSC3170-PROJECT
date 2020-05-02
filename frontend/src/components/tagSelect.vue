@@ -1,5 +1,5 @@
 <template>
-	<a-select mode="multiple" style="width: 500px" @change="handleChange" placeholder="Please select tags">
+	<a-select mode="multiple" style="width: 500px" @change="handleChange" placeholder="Please select at least one tag">
 		<!--a-select-option v-for="i in 25" :key="(i + 9).toString(36) + i">{{
       "tag" + i
     }}</a-select-option-->

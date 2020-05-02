@@ -74,7 +74,6 @@
                 venforVisitable: false,
 				selectedCat: 0,
 				selectedTag: [],
-				submitValid: false,
             }
         },
 		components: {
@@ -118,6 +117,7 @@
 			},
 			handelSubmit() {
 				if (this.selectedCat == 0 || this.selectedTag.length == 0) {
+					this.venforVisitable = false
 					return
 				}
 				console.log("submit category:", this.selectedCat)
