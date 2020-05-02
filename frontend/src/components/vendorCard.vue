@@ -6,7 +6,7 @@
         src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
         slot="cover"
       /-->
-      <a @click="handleJump" href="/vendorInfo" slot="extra">Details</a>
+      <a @click="handleJump" href="/vendor" slot="extra">Details</a>
         <p>Service: {{service}}</p>
         <p>Address: {{address}}</p>
         <p>Open Time: {{openTime}}</p>

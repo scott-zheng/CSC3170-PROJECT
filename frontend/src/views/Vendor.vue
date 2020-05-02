@@ -119,8 +119,8 @@ export default {
     }
   },
   created: function() {
-    var id = 52658172
-    // var id = sessionStorage.getItem('Vendor_id')
+    // var id = 52658172
+    var id = sessionStorage.getItem('Vendor_id')
     console.log(id)
     axios.post('/api/getVendorInfo',{
       vendor_id: id,
