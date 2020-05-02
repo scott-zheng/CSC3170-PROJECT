@@ -152,6 +152,21 @@ router.post('/setVendorInfo', (req, res) => {
   })
 })
 
+router.post('/getComment', (req, res) => {
+  var sql = $sql.comment.getComment
+  var params = req.body
+  console.log(params)
+  conn.query(sql, [params.vendor_id], function (err, result) {
+    if (err) {
+      console.log(err)
+    }
+    if (result) {
+      console.log(result)
+      jsonWrite(res, result)
+    }
+  })
+})
+
 router.post('/cancelReader', (req, res) => {
   var sql = $sql.reader.delete
   var params = req.body

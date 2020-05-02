@@ -33,13 +33,13 @@
         >
           <a-list-item slot="renderItem" slot-scope="item">
             <a-comment
-              :author="item.author"
-              :avatar="item.avatar"
-              :content="item.content"
-              :datetime="item.datetime"
+              :author="item.person_name"
+              avatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+              :content="item.Content"
+              :datetime="moment(item.time).fromNow()"
             >
             </a-comment>
-            <a-rate v-model="item.rate" />
+            <a-rate :default-value="5" disabled />
           </a-list-item>
         </a-list>
         <a-comment>
@@ -119,7 +119,7 @@ export default {
     }
   },
   created: function() {
-    var id = 1
+    var id = 52658172
     // var id = sessionStorage.getItem('Vendor_id')
     console.log(id)
     axios.post('/api/getVendorInfo',{
@@ -134,6 +134,12 @@ export default {
       this.$data.vendorInfo.service = res.vservice;
       this.$data.vendorInfo.opentime = res.venueOpenTime;
       this.$data.vendorInfo.closetime = res.venueCloseTime;
+    })
+    axios.post('/api/getComment', {
+      vendor_id: id,
+    }).then((response) => {
+      console.log(response.data);
+      this.comments = response.data
     })
   },
   components: {

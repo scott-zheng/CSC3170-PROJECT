@@ -8,7 +8,6 @@ var sqlMap = {
       setPersonInfo2: 'update customer set email = ?, birthday = ?, school = ?, college = ?, gender = ? where User_id = ?',
     },
     vendor: {
-      comments: 'select comments from vendor where vendor_id = ?',
       search: 'select vendor_id from vendor where category = ? and tag = ?',
       getVendorInfo: 'select * from vendor a inner join user b on a.user_id = b.user_id where a.user_id = ?',
       setVendorInfo1: 'update user set Person_Name = ?, Phone_number = ?, Person_Password = ? where User_id = ?',
@@ -17,5 +16,8 @@ var sqlMap = {
     tag: {
       all_tags: 'select Tag_name from Tag'
     },
+    comment: {
+      getComment: 'select Content,person_name,time from comment inner join user on comment.customer_id=user.user_id where vendor_id = ? order by time'
+    }
   }
   module.exports = sqlMap;
