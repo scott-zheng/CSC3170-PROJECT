@@ -601,7 +601,7 @@ attitude = generate_attitude(n, comment_id, customer_id)
 
 photo = generate_photo(n, used_id)
 
-db = pymysql.connect("localhost", "root", "QsCvHu...123", "databaseproj")
+db = pymysql.connect("localhost", "root", "123456", "databaseproj")
 
 cursor = db.cursor()
 

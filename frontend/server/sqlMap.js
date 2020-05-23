@@ -8,7 +8,7 @@ var sqlMap = {
       setPersonInfo2: 'update customer set email = ?, birthday = ?, school = ?, college = ?, gender = ? where User_id = ?',
     },
     customer: {
-      add: 'insert into Customer(User_id, school, college) values (?, 0, 0)',
+      add: 'insert into Customer(User_id) values (?)',
       find: 'select User_id from Customer where User_id = ?',
     },
     vendor: {
